@@ -34,6 +34,7 @@ jobs:
         MyJDCookie: ${{ secrets.JDCOOKIE }}
       run: |
         wget https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js
+        MyJDCookie=$(echo ${MyJDCookie} | sed 's/\//\\\//')
         sed -i "s/var Key = '';/var Key = '${MyJDCookie}';/" JD_DailyBonus.js
         node JD_DailyBonus.js
 
