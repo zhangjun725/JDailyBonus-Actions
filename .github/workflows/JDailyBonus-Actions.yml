@@ -1,0 +1,39 @@
+name: JDailyBonus-Actions
+
+on:
+  push:
+    branches: 
+      - master
+    paths:
+      - '.github/workflows/**'
+  schedule:
+    - cron: '0 0 * * *'
+  watch:
+    types: [started]
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    if: github.event.repository.owner.id == github.event.sender.id
+    
+    steps:
+    - name: Clone Repository
+      uses: actions/checkout@v1
+
+    - name: Init Build Dependencies
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+        sudo -E apt-get update -y
+        curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+        sudo -E apt-get install -y nodejs
+        sudo -E npm install request
+        
+    - name: JD Bonus
+      env:
+        MyJDCookie: ${{ secrets.JDCOOKIE }}
+      run: |
+        wget https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js
+        sed -i "s/var Key = '';/var Key = '${MyJDCookie}';/" JD_DailyBonus.js
+        node JD_DailyBonus.js
+
