@@ -6,5 +6,5 @@
 2. 开启 Actions Workflows 后将会每日自动签到，也可以点击项目右上角 ⭐Star 手动启动 Actions。
 
 ## 感谢
-感谢 NobyDa 提供签到脚本。
+感谢 NobyDa 提供签到脚本
 
